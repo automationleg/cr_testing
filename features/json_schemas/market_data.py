@@ -40,7 +40,7 @@ get_asset_pair_response = """
     },
     "result": {
       "type": "object",
-      "properties": {
+      "patternProperties": {
         "^X[A-Z]+": {
           "type": "object",
           "properties": {
@@ -157,9 +157,7 @@ get_asset_pair_response = """
           ]
         }
       },
-      "required": [
-        "XXBTZUSD"
-      ]
+      "additionalProperties": false
     }
   },
   "required": [

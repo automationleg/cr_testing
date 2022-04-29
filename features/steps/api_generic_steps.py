@@ -63,6 +63,26 @@ def step_impl(context, field_path):
     assert_that(match[0].value, has_items(*expected_values_in_list))
 
 
+@step('List Field "{field_path}" in response json contains the following integer values')
+def step_impl(context, field_path):
+    expected_values_in_list = [int(row['value']) for row in context.table]
+
+    jsonpath_expression = parse(field_path)
+    match = jsonpath_expression.find(context.response.json())
+
+    assert_that([item.value for item in match], has_items(*expected_values_in_list))
+
+
+@step('List Field "{field_path}" in response json contains the following fee value pairs')
+def step_impl(context, field_path):
+    expected_values_in_list = [[int(row['size']), float(row['fee'])] for row in context.table]
+
+    jsonpath_expression = parse(field_path)
+    match = jsonpath_expression.find(context.response.json())
+
+    assert_that([item.value for item in match], has_items(*expected_values_in_list))
+
+
 @step('Json response is equal to')
 def step_impl(context):
     expected_response = json.loads(context.text)
