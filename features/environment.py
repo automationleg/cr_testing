@@ -25,13 +25,14 @@ def before_all(context):
         'DEV': os.environ.get("SITE_URL_DEV"),
     }
 
-    environment = os.environ.get("ENVIRONMENT")
+    # set environment to DEV by default in case no environment variable set
+    environment = os.environ.get("ENVIRONMENT", "DEV")
     context.site_base_url = env_urls[environment]
 
     # authentication
     context.api_key = os.environ.get("API_KEY")
     context.api_sec = os.environ.get("API_SEC")
-    context.api_otp = os.environ.get("API_OTP", None)
+    context.api_otp = os.environ.get("API_OTP")
 
     # set allure properties file
     environment_properties = {

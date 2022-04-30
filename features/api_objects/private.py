@@ -1,21 +1,23 @@
-import requests.auth
-import requests as r
-import urllib.parse
+import base64
 import hashlib
 import hmac
-import base64
+import time
+import urllib.parse
+
+import requests as r
+import requests.auth
 
 
 class Auth(requests.auth.AuthBase):
-    def __init__(self, uri: str, api_key: str, api_secret: str, payload_data: str, otp: str = None):
+    def __init__(self, uri: str, api_key: str, api_secret: str, payload_data: str):
         # setup any auth-related data here
         self.uri = uri
         self.api_key = api_key
         self.api_secret = api_secret
         self.payload_data = payload_data
-        self.otp = otp
 
     def __call__(self, r):
+        r.headers['Content-Type'] = "application/x-www-form-urlencoded; charset=utf-8"
         r.headers['API-Key'] = self.api_key
         r.headers['API-Sign'] = self._get_signature(self.uri, self.payload_data, self.api_secret)
 
@@ -62,8 +64,13 @@ class PrivApiBase:
 
 
 class UserData(PrivApiBase):
-    def __init__(self, *args, **kwargs):
-        super(UserData, self).__init__(*args, **kwargs)
+    def __init__(self, site_url, auth, otp=None):
+        super(UserData, self).__init__(site_url, auth=auth)
+        self.otp = otp
 
     def get_data(self, uri, payload) -> requests.Response:
+        payload["nonce"] = str(int(1000 * time.time()))
+        if self.otp:
+            payload['otp'] = self.otp
+
         return self._send_request("POST", f'{uri}', data=payload)
