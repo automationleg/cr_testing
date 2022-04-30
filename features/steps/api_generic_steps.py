@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 from importlib import import_module
@@ -101,3 +102,11 @@ def step_impl(context, text):
         'Received http response is incorrect',
     )
 
+
+@step('Timestamp field "{field_path}" for order id "{order_id}" equal to date: "{date_string}"')
+def step_impl(context, field_path, order_id, date_string):
+    jsonpath_expression = parse(field_path)
+    match = jsonpath_expression.find(context.response.json())
+
+    field_date_time = datetime.datetime.fromtimestamp(match[0].value)
+    assert_that(field_date_time.date().strftime("%Y-%m-%d"), equal_to(date_string))

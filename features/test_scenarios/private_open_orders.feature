@@ -32,6 +32,7 @@ Feature: Test UserData endpoints
     And Field "$.result.<status>.<order_id>.vol" in response json is equal to "<vol>"
     And Field "$.result.<status>.<order_id>.fee" in response json is equal to "<fee>"
     And Field "$.result.<status>.<order_id>.oflags" in response json is equal to "<oflags>"
+    And Timestamp field "$.result.<status>.<order_id>.opentm" for order id "<order_id>" equal to date: "2022-04-29"
 
   Examples: Open orders
     | order_id            | status | pair    | type | ordertype | price   | leverage | vol        | fee     | oflags |
