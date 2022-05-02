@@ -34,7 +34,7 @@ docker build -t cr_testing .
 ```
 2. Execute tests
 ```shell
-docker run --rm -e SITE_URL=<YOUR_SITE_URL>
+docker run --rm -e SITE_URL=<YOUR_SITE_URL> \
     -e API_KEY=<YOUR_API_KEY> \
     -e API_SEC=<YOUR_API_SEC> \
     -e API_OTP=<YOUR_API_OTP> \
