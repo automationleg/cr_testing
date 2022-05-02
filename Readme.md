@@ -9,9 +9,9 @@
     └── test_scenarios
 ```
 
-api_objects     - api objects and helper functions
-json_schemas    - files with json schemas used to validate api responses
-steps           - behave test steps
+api_objects     - api objects and helper functions  
+json_schemas    - files with json schemas used to validate api responses  
+steps           - behave test steps  
 test_scenarios  - behave feature files with test scenarios
 
 ## Environment setup
@@ -24,7 +24,7 @@ API_SEC  - secure private key
 API_OTP  - secure password for 2FA auth  
 SITE_URL - main api url 
 
-Install Allure reports - follow steps in [Reporting](##reporting) section
+Install Allure reports - follow steps in [Reporting](##reporting) section below
 
 ## Test Execution with Docker
 local docker engine or docker desktop app is required to run the following commands
