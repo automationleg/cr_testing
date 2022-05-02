@@ -1,6 +1,5 @@
 # Created by automationleg at 27/04/2022
 Feature: Set of scenarios to validate public MarketData endpoints
-  # Enter feature description here
 
   @api @task-1a
   Scenario: Validate "Get Server Time" via /Time endpoint

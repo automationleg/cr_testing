@@ -8,7 +8,7 @@ from features.api_objects.private import UserData, Auth
 
 @step('POST Request is sent to get "{endpoint_uri}" User Data')
 def step_impl(context, endpoint_uri):
-    # add optional payload params
+    # add optional payload params without nonce and otp
     payload_data = json.loads(context.text) if context.text else {}
 
     auth = Auth(uri=endpoint_uri,

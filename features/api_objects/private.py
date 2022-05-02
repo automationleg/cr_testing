@@ -9,6 +9,12 @@ import requests.auth
 
 
 class Auth(requests.auth.AuthBase):
+    """
+    Custom Authentication object to handle requests with API-Key and API-Sign with signature logic
+
+    example usage:
+    >>> auth = Auth('my app url', 'api_key', 'api secret key', 'payload')
+    """
     def __init__(self, uri: str, api_key: str, api_secret: str, payload_data: str):
         # setup any auth-related data here
         self.uri = uri
@@ -35,9 +41,6 @@ class Auth(requests.auth.AuthBase):
 
 class PrivApiBase:
     def __init__(self, url: str, auth):
-        """
-        Perform session authorization to API
-        """
         self.site_url: str = url
         self.auth = auth
 
@@ -45,10 +48,8 @@ class PrivApiBase:
         self, method: str, uri: str, **kwargs
     ) -> requests.Response:
         """
-        Generic method to send rest api request
+        Generic method to send rest api request that require custom authentication
         :param method: REST method ie: 'GET', 'POST', 'PUT', 'DELETE'
-        :param url_suffix: url part following the uri string: ie: '/{id}/', '/{id}/process'
-        :param payload: Optional json payload
         :return: requests.Response
         """
 
@@ -64,6 +65,9 @@ class PrivApiBase:
 
 
 class UserData(PrivApiBase):
+    """
+    Object used to send requests and obtain results from Private User Data api endpoint
+    """
     def __init__(self, site_url, auth, otp=None):
         super(UserData, self).__init__(site_url, auth=auth)
         self.otp = otp
